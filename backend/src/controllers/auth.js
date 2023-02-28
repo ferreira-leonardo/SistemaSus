@@ -1,6 +1,5 @@
 const mysql = require('mysql2')
-const jwt = require('jsonwebtoken')
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs') //criptografia
 require('dotenv').config()
 
 const DB = process.env.MYSQL_DB
@@ -46,9 +45,8 @@ const register = (req, res) => {
         }
 
         let hashedPassword = await bcrypt.hash(password, 8)
-        console.log(hashedPassword)
 
-        const values = {id_paciente: 7777,cartaoSUS: cartaoSUS, nome: name, cpf: cpf, dataNac: dateBirth, sexo: sex, bairro: address, telefone: telephone, email: email, password: hashedPassword}
+        const values = {cartaoSUS: cartaoSUS, nome: name, cpf: cpf, dataNac: dateBirth, sexo: sex, bairro: address, telefone: telephone, email: email, password: hashedPassword}
 
         db.query('INSERT INTO paciente SET ?', values, (error, results)=>{
             if(error){
